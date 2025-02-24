@@ -13,16 +13,9 @@
 8. [License](#license)
 
 ## Project Description
-Készíts egy Spring boot alapú REST API-t, amely ügyfél adatok tárolására és kezelésére alkalmas.
+The **User Manager** is a RESTful API built with Spring Boot that allows managing user data efficiently. It provides functionality for creating, reading, updating, and deleting user records while ensuring data validation and authentication. The application uses a relational database to store user information and supports both an in-memory H2 database for testing and a MySQL database for production.
 
-- Az alkalmazás rendelkezzen adatbázissal, amelyet maga hoz létre és tölt fel tesztadatokkal;
-- Az ügyfél entitás rendelkezzen a valós életben szokványos tulajdonságokkal;
-- A REST API nyújtson CRUD metódusokat;
-- Az adatok legyenek validálva;
-- A REST API rendelkezzen authentikációval;
-- Legyen egy végpont, amely visszaadja az ügyfelek átlagéletkorát. A számítást a JPA segítségével (query-vel) valósítsd meg;
-- Legyen egy végpont, amely visszaad minden 18 és 40 év közötti ügyfelet. A számítást streaming segítségével valósítsd meg;
-- Bizonyítsd az alkalmazás helyes működését!
+Additionally, the API includes specialized endpoints for retrieving statistical insights, such as calculating the average age of users and filtering users within a specified age range. The backend is structured with Spring Data JPA to interact with the database, and security measures are implemented using Spring Security.
 
 ## Technologies Used
 - **Java 23**
@@ -73,7 +66,6 @@ No additional configuration needed. The H2 database is used for runtime by defau
 ### MySQL Database (for production)  
 Update your `application.properties` file with your MySQL database connection details:
 
-```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/yourdatabase
 spring.datasource.username=yourusername
 spring.datasource.password=yourpassword

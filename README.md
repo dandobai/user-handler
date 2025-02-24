@@ -77,10 +77,7 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 
 ## Running the Application
 
-To run the application, use the following Maven command:
-
-```sh
-mvn spring-boot:run
+To run the application, use the following Maven command in sh: "mvn spring-boot:run"
 
 ## Contributing
 

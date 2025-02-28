@@ -2,6 +2,7 @@ package com.dandobai.user_handler.controllers;
 
 import com.dandobai.user_handler.dtos.UserDTO;
 import com.dandobai.user_handler.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,7 @@ public class UserController {
 
     private final UserService userService;
 
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }

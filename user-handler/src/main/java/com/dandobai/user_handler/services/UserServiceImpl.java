@@ -3,6 +3,7 @@ package com.dandobai.user_handler.services;
 import com.dandobai.user_handler.dtos.UserDTO;
 import com.dandobai.user_handler.models.User;
 import com.dandobai.user_handler.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

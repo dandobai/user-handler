@@ -1,7 +1,10 @@
 package com.dandobai.user_handler.controllers;
 
+import com.dandobai.user_handler.dtos.UserRegistrationDTO;
 import com.dandobai.user_handler.dtos.UserDTO;
+import com.dandobai.user_handler.dtos.authentication.AuthenticationRequest;
 import com.dandobai.user_handler.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +23,30 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PostMapping("/registration")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegistrationDTO userRegistrationDTO) {
+        try {
+            Object result = userService.validateAndSave(userRegistrationDTO);
+            return ResponseEntity.status(201).body(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error during registration: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
+        try {
+            Object result = userService.validateAndLogin(authenticationRequest);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body("Invalid credentials: " + e.getMessage());
+        }
+    }
+
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
-        return ResponseEntity.ok(userService.findAllUsers());
+        List<UserDTO> users = userService.findAllUsers();
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
@@ -32,13 +56,8 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        return ResponseEntity.ok(userService.createUser(userDTO));
-    }
-
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
         Optional<UserDTO> updatedUser = userService.updateUser(id, userDTO);
         return updatedUser.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -50,5 +69,17 @@ public class UserController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/average-age")
+    public ResponseEntity<Double> getAverageAge() {
+        Double averageAge = userService.getAverageAge();
+        return ResponseEntity.ok(averageAge);
+    }
+
+    @GetMapping("/18-40")
+    public ResponseEntity<List<UserDTO>> getUsersBetween18And40() {
+        List<UserDTO> users = userService.getUsersBetween18And40();
+        return ResponseEntity.ok(users);
     }
 }
